@@ -1,0 +1,37 @@
+<ng-container *ngIf="isLoading"><h1>Is loading...</h1></ng-container>
+
+<ng-container *ngIf="!isLoading">
+    <div *ngIf="episode">
+    <h1>Guess the Series</h1>
+    <div style="margin-top: 64px;">
+    <h2>Episode Title: {{ episode.Title }}</h2>
+    <h3>Hints:</h3>
+    <p><strong>Season:</strong> {{ episode.Season }} <strong>Episode:</strong> {{ episode.Episode }}</p>
+    <p><strong>Plot:</strong> {{ episode.Plot }}</p>
+
+    <ng-container *ngIf="!showImage">
+        <p><strong>Need another hint?</strong></p> 
+        <button (click)="showEpisodeImage()">Show episode image</button>
+    </ng-container>
+
+    <!-- Episode image will be shown on button click -->
+    <img src="{{ episode.Poster }}" *ngIf="showImage">
+
+    <h2 style="margin-top: 64px;">Which series are we talking about?</h2>
+    <div style="display: flex; gap: 8px">
+    <div *ngFor="let option of answerOptions">
+        <button (click)="answer(option.isCorrect)">{{ option.title }}</button>
+      </div>
+    </div>
+    </div>
+  </div>
+
+
+<ng-container *ngIf="answered">
+
+    <div *ngIf="answeredCorrect"><p>You are right. The correct answer is {{ this.seriesTitle }}</p>
+    <button (click)="loadEpisode()">Next</button></div>
+    <div *ngIf="!answeredCorrect"><p>Oh no, you are wrong. The correct answer is {{ this.seriesTitle }}</p>
+    <button (click)="loadEpisode()">Try again</button></div>
+
+</ng-container></ng-container>

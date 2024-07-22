@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+    max-width: 75%;
+    padding: 32px 64px;
+    font-size: 1.25rem;
+}
+
+button {
+    font-size: 1.25rem;
+    cursor: pointer;
+}
