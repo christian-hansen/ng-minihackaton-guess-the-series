@@ -39,7 +39,9 @@ testem.log
 
 #Environments
 /src/environments
+/db-helper/xdbv1.txt
 
 # System files
 .DS_Store
 Thumbs.db
+

@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+#episode-list {
+    margin-top: 20px;
+}
+.episode-item {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+pre {
+    background: #000000;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #e4e3e3;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.2;
+    margin-bottom: 1.6em;
+    width: 100%;
+    overflow: auto;
+    padding: 3em 0em 2em 2em;
+    display: block;
+    word-wrap: break-word;
+    max-width: 600px;
+}
+
+button {
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.copy-button {
+    position: absolute;
+    top: 8px;
+    right: -24px;
+    z-index: 100;
+}
