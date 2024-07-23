@@ -66,6 +66,7 @@ export class EpisodeDisplayComponent {
         this.answerOptions = this.answerOptions.sort(() => Math.random() - 0.5);
         this.isLoading = false;
       }
+      else return;
     });
   }
 

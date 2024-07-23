@@ -1,4 +1,4 @@
-const API_KEY = '8b0b8f47'; // Replace with your OMDb API key
+const API_KEY = '1234567'; // Replace with your OMDb API key
 const BASE_URL = 'http://www.omdbapi.com/';
 
 const seriesIds = [
