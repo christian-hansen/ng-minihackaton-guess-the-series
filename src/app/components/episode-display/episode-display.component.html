@@ -5,17 +5,25 @@
     class="centered margin-medium"
     styleClass="w-2rem h-2rem"
     strokeWidth="4"
-/></ng-container>
+/>
+<div style="padding: 32px 0px"><p-messages 
+    [(value)]="messages" 
+    [enableService]="false" 
+    [closable]="false" /></div>
+</ng-container>
 
 <!-- Container for Episode and After Answering container -->
-<ng-container *ngIf="!isLoading">
+<ng-container *ngIf="!isLoading" >
 
   <!-- Episode content container -->
-  <div *ngIf="episode">
+  <div *ngIf="episode && !dialogActive">
     <div class="margin-medium">
-      <strong>Episode Information:</strong>
-      <h1>{{ episode.Title }}</h1>
+      <h2>Episode Information:</h2>
       <div class="flex-column">
+        <div class="episode-title">
+          <strong>Title: </strong>
+          <span>"{{ episode.Title }}"</span>
+        </div>
         <div>
           <strong>Season:</strong> {{ episode.Season }} <strong>Episode:</strong>
           {{ episode.Episode }}
@@ -25,15 +33,16 @@
       </div>
 
       <p-divider />
+
       <!-- When Episode details content is hidden -->
-      <ng-container *ngIf="!showDetails" >
+       <ng-container *ngIf="!showDetails">
         <p-button
           label="Need another hint? Show the episode's plot"
           icon="pi pi-book"
           (click)="showMoreDetails()"
           raised="true"
-          [disabled]="answered"
-          severity="contrast"
+          [disabled]="answered || dialogActive"
+          severity="secondary"
           pTooltip="Get to read the episode's plot"
           tooltipPosition="bottom"
         />
@@ -46,12 +55,12 @@
         <!-- When Episode image is hidden -->
         <ng-container *ngIf="!showImage">
             <p-button
-              label="Need another hint? Show episode image"
+              label="Still no idea? Show episode image"
               icon="pi pi-image"
               (click)="showEpisodeImage()"
-              [disabled]="answered"
+              [disabled]="answered || dialogActive"
               raised="true"
-              severity="contrast"
+              severity="secondary"
               pTooltip="Get to see an image from the episode"
               tooltipPosition="bottom"
             />
@@ -68,7 +77,9 @@
         <ng-container *ngFor="let option of answerOptions">
           <p-button
             (click)="answer(option.isCorrect)"
-            [disabled]="answered"
+            raised="true"
+            severity="contrast"
+            [disabled]="answered || dialogActive"
             label="{{ option.title }}"
           />
         </ng-container>
@@ -79,14 +90,14 @@
   </div>
 
 <!-- After Answering content container -->
-  <ng-container *ngIf="answered">
+  <ng-container *ngIf="answered && !dialogActive">
     <div *ngIf="answeredCorrect" class="answered border-green">
       <div class="flex-column centered mb-16 ">
         <h2 class="mt-0">Yes, that's right</h2> 
         The correct answer is <strong class="series-title">{{ this.seriesTitle }}</strong>
-        <div *ngIf="(points === 1)">Ok. <p-badge value="{{points}}" severity="primary"/> point was added to your score.</div>
-        <div *ngIf="(points === 2)">Good. <p-badge value="{{points}}" severity="primary"/> points were added to your score.</div>
-        <div *ngIf="(points === 5)">Perfect. <p-badge value="{{points}}" severity="primary"/> points were added to your score.</div>
+        <div *ngIf="(points === 1)">Ok. <p-badge value="{{points}}" severity="warning" badgeSize="large"/> point was added to your score.</div>
+        <div *ngIf="(points === 2)">Good. <p-badge value="{{points}}" severity="warning" badgeSize="large"/> points were added to your score.</div>
+        <div *ngIf="(points === 5)">Perfect. <p-badge value="{{points}}" severity="warning" badgeSize="large"/> points were added to your score.</div>
       </div>
       
       <p-button (click)="loadEpisode()" label="Next" severity="success" />
