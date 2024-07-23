@@ -1,37 +1,104 @@
-<ng-container *ngIf="isLoading"><h1>Is loading...</h1></ng-container>
+<!-- Loading progress spinner -->
+<ng-container *ngIf="isLoading"
+  ><p-progressSpinner
+    ariaLabel="loading"
+    class="centered margin-medium"
+    styleClass="w-2rem h-2rem"
+    strokeWidth="4"
+/></ng-container>
 
+<!-- Container for Episode and After Answering container -->
 <ng-container *ngIf="!isLoading">
-    <div *ngIf="episode">
-    <h1>Guess the Series</h1>
-    <div style="margin-top: 64px;">
-    <h2>Episode Title: {{ episode.Title }}</h2>
-    <h3>Hints:</h3>
-    <p><strong>Season:</strong> {{ episode.Season }} <strong>Episode:</strong> {{ episode.Episode }}</p>
-    <p><strong>Plot:</strong> {{ episode.Plot }}</p>
 
-    <ng-container *ngIf="!showImage">
-        <p><strong>Need another hint?</strong></p> 
-        <button (click)="showEpisodeImage()">Show episode image</button>
-    </ng-container>
-
-    <!-- Episode image will be shown on button click -->
-    <img src="{{ episode.Poster }}" *ngIf="showImage">
-
-    <h2 style="margin-top: 64px;">Which series are we talking about?</h2>
-    <div style="display: flex; gap: 8px">
-    <div *ngFor="let option of answerOptions">
-        <button (click)="answer(option.isCorrect)">{{ option.title }}</button>
+  <!-- Episode content container -->
+  <div *ngIf="episode">
+    <div class="margin-medium">
+      <strong>Episode Information:</strong>
+      <h1>{{ episode.Title }}</h1>
+      <div class="flex-column">
+        <div>
+          <strong>Season:</strong> {{ episode.Season }} <strong>Episode:</strong>
+          {{ episode.Episode }}
+        </div>
+        <div><strong>Genre:</strong> {{ episode.Genre }}</div>
+        <div><strong>Released:</strong> {{ episode.Released ? (episode.Released | date: 'longDate') : "No release date available" }} </div>
       </div>
-    </div>
+
+      <p-divider />
+      <!-- When Episode details content is hidden -->
+      <ng-container *ngIf="!showDetails" >
+        <p-button
+          label="Need another hint? Show the episode's plot"
+          icon="pi pi-book"
+          (click)="showMoreDetails()"
+          raised="true"
+          [disabled]="answered"
+          severity="contrast"
+          pTooltip="Get to read the episode's plot"
+          tooltipPosition="bottom"
+        />
+      </ng-container>
+
+      <!-- When Episode details content is displayed -->
+      <ng-container *ngIf="showDetails" class="margin-medium">
+        <p><strong>Plot:</strong> {{ episode.Plot }}</p>
+
+        <!-- When Episode image is hidden -->
+        <ng-container *ngIf="!showImage">
+            <p-button
+              label="Need another hint? Show episode image"
+              icon="pi pi-image"
+              (click)="showEpisodeImage()"
+              [disabled]="answered"
+              raised="true"
+              severity="contrast"
+              pTooltip="Get to see an image from the episode"
+              tooltipPosition="bottom"
+            />
+        </ng-container>
+        <!-- When Episode image is displayed -->
+        <img style="width: 100%" src="{{ episode.Poster }}" *ngIf="showImage" />
+      </ng-container>
+
+      <!-- Answer options container -->
+      <p-divider />
+
+      <h2>Which series are we looking for?</h2>
+      <div class="flex-column">
+        <ng-container *ngFor="let option of answerOptions">
+          <p-button
+            (click)="answer(option.isCorrect)"
+            [disabled]="answered"
+            label="{{ option.title }}"
+          />
+        </ng-container>
+
+      </div>
+    
     </div>
   </div>
 
+<!-- After Answering content container -->
+  <ng-container *ngIf="answered">
+    <div *ngIf="answeredCorrect" class="answered border-green">
+      <div class="flex-column centered mb-16 ">
+        <h2 class="mt-0">Yes, that's right</h2> 
+        The correct answer is <strong class="series-title">{{ this.seriesTitle }}</strong>
+        <div *ngIf="(points === 1)">Ok. <p-badge value="{{points}}" severity="primary"/> point was added to your score.</div>
+        <div *ngIf="(points === 2)">Good. <p-badge value="{{points}}" severity="primary"/> points were added to your score.</div>
+        <div *ngIf="(points === 5)">Perfect. <p-badge value="{{points}}" severity="primary"/> points were added to your score.</div>
+      </div>
+      
+      <p-button (click)="loadEpisode()" label="Next" severity="success" />
+    </div>
+    <div *ngIf="!answeredCorrect" class="answered border-red">
+      <div class="flex-column centered mb-16 ">
+        <h2 class="mt-0">Oh no, that's wrong.</h2>
+        The correct answer is <strong class="series-title">{{ this.seriesTitle }}</strong>
+      <div>You collected no points.</div>
+      </div>
+      <p-button (click)="loadEpisode()" label="Try again" severity="danger" />
+    </div> 
+  </ng-container>
 
-<ng-container *ngIf="answered">
-
-    <div *ngIf="answeredCorrect"><p>You are right. The correct answer is {{ this.seriesTitle }}</p>
-    <button (click)="loadEpisode()">Next</button></div>
-    <div *ngIf="!answeredCorrect"><p>Oh no, you are wrong. The correct answer is {{ this.seriesTitle }}</p>
-    <button (click)="loadEpisode()">Try again</button></div>
-
-</ng-container></ng-container>
+</ng-container>

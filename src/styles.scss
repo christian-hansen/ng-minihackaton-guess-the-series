@@ -1,11 +1,86 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
 html {
-    max-width: 75%;
-    padding: 32px 64px;
-    font-size: 1.25rem;
+    display: flex;
+    justify-content: center;
+    // align-items: center;
+    min-height: 100%;
+}
+
+body {
+    width: 100%;
+    padding: 16px;
+    max-width: 520px;
 }
 
 button {
+    width: 100%;
+}
+
+.menu {
+    min-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background: white;
+    border-bottom: 1px solid lightgray;
+    padding: 0px 8px 16px 8px;
+}
+
+.series-title {
     font-size: 1.25rem;
-    cursor: pointer;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction:column;
+    gap: 8px;
+}
+
+.margin-medium {
+    margin-top: 32px;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.margin-big {
+    margin-top: 32px;
+}
+
+.mt-0 {
+    margin-top: 0px;
+}
+
+.mb-16 {
+    margin-bottom: 16px;
+}
+
+.answered {
+    position: sticky;
+    bottom: -20px;
+    left: 0;
+    background: white;
+    border: 4px solid lightgrey;
+    border-radius: 24px;
+    margin: 24px -24px 0px -24px;
+    padding: 40px 32px 40px 32px;
+}
+
+.border-green {
+    border-color: #22c55e
+}
+
+.border-red {
+    border-color: red
 }

@@ -1,9 +1,9 @@
-const API_KEY = '1234567'; // Replace with your OMDb API key
+const API_KEY = '8b0b8f47'; // Replace with your OMDb API key
 const BASE_URL = 'http://www.omdbapi.com/';
 
 const seriesIds = [
-    "tt0903747",//: "Breaking Bad" 62,
-    "tt0185906",//: "Band of Brothers" 10,
+    // "tt0903747",//: "Breaking Bad" 62,
+    // "tt0185906",//: "Band of Brothers" 10,
     // "tt11198330",//: "House of the Dragon" 20,
     // "tt7366338",//: "Chernobyl" 5,
     // "tt2442560",//: "Peaky Blinders" 36,
@@ -84,10 +84,28 @@ const seriesIds = [
     // "tt1520211",//: "The Walking Dead" 177,
     // "tt1844624",//: "American Horror Story" 177,
     // "tt0436992",//: "Dr. Who" 175
+    "tt2879552",//: "11.22.63" 8,
+    "tt0059968",//: "Batman" 120,
+    "tt0083437",//: "Knight Rider" 90,
+    "tt0086662",//: "Airwolf" 55,
+    "tt9140560",//: "WandaVision" 9,
+    "tt10160804",//: "Hawkeye" 6,
+    "tt10234724",//: "Moon Knight" 6,
+    "tt5753856",//: "Dark" 26,
+    "tt2531336",//: "Lupin" 26,
+    "tt10048342",//: "The Queen's Gambit" 7,
+    "tt3322312",//: "Daredevil" 39,
+    "tt0455275",//: "Prison Break" 90,
+    "tt1312171",//: "The Umbrella Academy" 36,
+    "tt6468322",//: "Money Heist" 41,
+    "tt10919420",//: "Squid Game" 10,
+    "tt5290382",//: "Mindhunter" 19,
+    "tt2861424",//: "Rick and Morty" 74,
+    "tt9208876",//: "The Falcon and the Winter Soldier" 6,
 ];
 const seriesData = {
-    "tt0903747" : "Breaking Bad",
-    "tt0185906" : "Band of Brothers",
+    // "tt0903747" : "Breaking Bad",
+    // "tt0185906" : "Band of Brothers",
     // "tt11198330": "House of the Dragon",
     // "tt7366338": "Chernobyl",
     // "tt2442560": "Peaky Blinders",
@@ -168,6 +186,24 @@ const seriesData = {
     // "tt1520211": "The Walking Dead",
     // "tt1844624": "American Horror Story",
     // "tt0436992": "Dr. Who"
+    "tt2879552"  : "11.22.63",
+    "tt0059968" : "Batman",
+    "tt0083437" : "Knight Rider",
+    "tt0086662" : "Airwolf",
+    "tt9140560" : "WandaVision",
+    "tt10160804" : "Hawkeye",
+    "tt10234724" : "Moon Knight",
+    "tt5753856" : "Dark",
+    "tt2531336" : "Lupin",
+    "tt10048342" : "The Queen's Gambit",
+    "tt3322312" : "Daredevil",
+    "tt0455275" : "Prison Break",
+    "tt1312171" : "The Umbrella Academy",
+    "tt6468322" : "Money Heist",
+    "tt10919420" : "Squid Game",
+    "tt5290382" : "Mindhunter",
+    "tt2861424" : "Rick and Morty",
+    "tt9208876" : "The Falcon and the Winter Soldier"
 };
 let imdbEpisodeIds = [];
 
