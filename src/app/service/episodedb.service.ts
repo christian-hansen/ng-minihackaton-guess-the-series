@@ -22,7 +22,7 @@ private readonly seriesData: { [seriesId: string]: string } = {
     "tt0475784": "Westworld",
     "tt13443470": "Wednesday",
     "tt1190634": "The Boys",
-    "tt5180504": "The Withcer",
+    "tt5180504": "The Witcher",
     "tt3581920": "The Last of Us",
     "tt0384766": "Rome",
     "tt13159924": "Gen V",
