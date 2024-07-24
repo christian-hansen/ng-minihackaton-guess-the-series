@@ -1,29 +1,49 @@
 <div class="menu">
     <div class="app-title">GUESS THE SERIES</div>
-    <div class="icon-menu">
-        <div class="flex-column">
-            <div style="font-size: 14px; font-weight: 800; min-width: 48px; align-items: center">RULES</div>
-            <p-button (onClick)="showDialog()" icon="pi pi-info" [rounded]="true" [outlined]="true" class="fullwidth" severity="contrast"/>
-        </div>
-        <p-dialog header="Game Information" [modal]="true" [(visible)]="infoVisible" [style]="{ width: '90%', maxWidth: '500px' }" (onHide)="closeDialog()">
-            <div>
-                <h2>Guess the correct series to gather points.</h2>
-                <p>When the game starts you get the episode's title together with it's season and season episode number as well as the episode's genre and release date. </p>
-        
-                <h3>Use hints</h3>
-                <p>If you need an additional hint you can get the episode's plot displayed by clicking on the button. If you need a second and final hint you can also display an episode image. </p>
-                
-                <h3>Points</h3>
-                <p>If you guess the correct series without additional hints you will be rewarded with 5 points. 
-                If you need the plot you still get 2 points.
-                If you guess right after reading the plot and seeing the image you still get 1 point added to your score."</p>
 
-                <h3>Enjoy playing the game</h3>
-            </div>
-        </p-dialog>
+    <div class="icon-menu">
+        <div class="flex-column" style="min-width: 48px; margin-bottom: -8px; gap: 9px">
+            <div class="icon-container">RULES</div>
+            <p-button (onClick)="showDialog()" icon="pi pi-info-circle" [outlined]="true" class="fullwidth" severity="contrast"/>
+        
+            <p-dialog header="Game Information" [modal]="true" [(visible)]="infoVisible" [style]="{ width: '90%', maxWidth: '500px' }" (onHide)="closeDialog()">
+                <div>
+                    <h2>Guess the correct series to gather points.</h2>
+                    <p>When the game starts you get the episode's title together with it's season and season episode number as well as the episode's genre and release date. </p>
+            
+                    <h3>Use hints</h3>
+                    <p>If you need an additional hint you can get the episode's plot displayed by clicking on the button. If you need a second and final hint you can also display an episode image. </p>
+                    
+                    <h3>Points</h3>
+                    <p>If you guess the correct series without additional hints you will be rewarded with 5 points. 
+                    If you need the plot you still get 2 points.
+                    If you guess right after reading the plot and seeing the image you still get 1 point added to your score."</p>
+            
+                    <h3>Enjoy playing the game</h3>
+                </div>
+            </p-dialog>
+        </div>
+        <div class="flex-column centered" >
+            <div class="icon-container">HIGHSCORE</div>
+            <p-badge value="{{this.pointsService.highscore}}" badgeSize="xlarge" severity="contrast" pTooltip="Your saved highscore is {{this.pointsService.highscore}} points." tooltipPosition="bottom"/>
+        </div>
+        
+    </div>
+    <p-divider layout="vertical" class="hidemobile"/>
+
+    <div class="icon-menu">
         <div class="flex-column" style="align-items: center; min-width:48px;">
-            <div style="font-size: 14px; font-weight: 800">SCORE</div>
+            <div class="icon-container">YOUR SCORE</div>
             <p-badge value="{{this.pointsService.points}}" badgeSize="xlarge" severity="warning" pTooltip="You scored {{this.pointsService.points}} points so far." tooltipPosition="bottom"/>
         </div>
+        <div class="flex-column" style="align-items: center; min-width:48px;">
+            <div class="icon-container">TRIES LEFT</div>
+            <p-badge value="{{this.pointsService.tries}}" badgeSize="xlarge" severity="secondary" pTooltip="You have {{this.pointsService.tries}} tries left in this round." tooltipPosition="bottom"/>
+        </div>
+
+        
+
     </div>
+    
+
 </div>

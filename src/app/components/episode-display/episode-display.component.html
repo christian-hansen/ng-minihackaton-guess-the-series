@@ -102,13 +102,29 @@
       
       <p-button (click)="loadEpisode()" label="Next" severity="success" />
     </div>
-    <div *ngIf="!answeredCorrect" class="answered border-red">
+    <div *ngIf="!answeredCorrect && this.pointsService.tries > 0" class="answered border-red">
       <div class="flex-column centered mb-16 ">
-        <h2 class="mt-0">Oh no, that's wrong.</h2>
-        The correct answer is <strong class="series-title">{{ this.seriesTitle }}</strong>
-      <div>You collected no points.</div>
+        <h2 class="mt-0 mb-16">Oh no, that's wrong.</h2>
+        The correct answer is <strong class="series-title mb-16">{{ this.seriesTitle }}</strong>
+      <div>You have scored no points and lost a try. </div>
+      <div>You have <p-badge value="{{this.pointsService.tries}}" severity="secondary" badgeSize="large"/> <span *ngIf="this.pointsService.tries > 1"> tries</span><span *ngIf="this.pointsService.tries === 1"> try</span> remaining.</div>
+      
       </div>
       <p-button (click)="loadEpisode()" label="Try again" severity="danger" />
+    </div> 
+
+    <div *ngIf="!answeredCorrect && this.pointsService.tries === 0" class="answered border-red">
+      <div class="flex-column centered mb-16 ">
+        <h2 class="mt-0 mb-16">Oh no, you lost.</h2>
+        The correct answer is <strong class="series-title mb-16">{{ this.seriesTitle }}</strong>
+      <div>You have scored no points and lost your last try.</div>
+      <div>You have <p-badge value="{{this.pointsService.tries}}" severity="secondary" badgeSize="large"/> tries remaining.</div>
+      <div>You scored a total of <p-badge value="{{this.pointsService.points}}" severity="warning" badgeSize="large"/> points.</div> 
+      <div *ngIf="newHighscoreAdded"><strong>Congrats, a new highscore! </strong>🚀</div>
+
+      
+      </div>
+      <p-button (click)="startNewGame()" label="Start a new game" severity="secondary" />
     </div> 
   </ng-container>
 

@@ -35,13 +35,16 @@ export class EpisodeDisplayComponent {
   points: number = 0;
   dialogActive: boolean = false;
   loadingCounter: number = 0;
+  highscore: number = 0
   private intervalId: any;
   messages!: Message[];
+  newHighscore: boolean = false;
+  newHighscoreAdded: boolean = false;
 
   constructor(
     private omdbService: OmdbService,
     private episodedb: EpisodedbService,
-    private pointsService: PointsService,
+    public pointsService: PointsService,
     private dialogService: DialogService,
   ) {}
 
@@ -59,7 +62,6 @@ export class EpisodeDisplayComponent {
     }
   }
 
-
   loadEpisode(): void {
     this.reset();
     this.answeredCorrect = false;
@@ -69,12 +71,7 @@ export class EpisodeDisplayComponent {
       this.omdbService.getImdbEntry(searchId).subscribe((episode) => {
       this.episode = episode;
 
-      if (
-        (this.episode.Response = 'True' &&
-          this.episode.Type === 'episode' &&
-          this.episode.seriesId !== 'N/A' &&
-          this.episode.Plot !== 'N/A')
-      ) {
+      if (this.seriesInformationAvailable()) {
         this.seriesTitle = this.episodedb.getSeriesTitle(this.episode.seriesID) as string;
         this.answerOptions = [
           { title: this.seriesTitle, isCorrect: true },
@@ -100,17 +97,55 @@ export class EpisodeDisplayComponent {
     this.showImage = true;
   }
 
+  seriesInformationAvailable() {
+  if (this.episode.Response = 'True' &&
+      this.episode.Type === 'episode' &&
+      this.episode.seriesId !== 'N/A' &&
+      this.episode.Plot !== 'N/A') {
+        return true;
+      } else return false;
+  }
+
   reset() {
     this.isLoading = true;
+    this.loadingCounter = 0;
     this.episode = {};
     this.seriesTitle = '';
     this.answered = false;
     this.answerOptions = [];
     this.showImage = false;
     this.showDetails = false;
-    this.points = 0;
-    this.loadingCounter = 0;
   }
+
+  startNewGame() {
+    this.pointsService.resetGame()
+    this.newHighscore = false;
+    this.newHighscoreAdded = false;
+    this.loadEpisode();
+  }
+
+  saveHighscore() {
+    let pointsScored = this.pointsService.points;
+
+    if (this.newHighscore) {
+      let currentScore = JSON.stringify(pointsScored);
+      localStorage.setItem("guess-series-highscore", currentScore);
+      this.pointsService.highscore = pointsScored;
+      this.newHighscoreAdded = true;
+    }
+  }
+
+  checkNewHighscore() {  
+    let highscore = this.pointsService.highscore
+    let pointsScored = this.pointsService.points;
+
+    if (highscore < pointsScored) {      
+      this.newHighscore = true
+      this.saveHighscore()
+    }
+    else this.newHighscore = false
+  }
+
 
   startLoadingCounter() {
     if (this.intervalId) {
@@ -120,6 +155,8 @@ export class EpisodeDisplayComponent {
     this.loadingCounter = 0;
     this.intervalId = setInterval(() => {
       this.loadingCounter++;
+      console.warn("Loading...", this.loadingCounter);
+      
       if(this.loadingCounter === 10) {
         this.messages = this.addWarnMessage(1)
       }
@@ -148,12 +185,16 @@ export class EpisodeDisplayComponent {
       this.points = this.getPoints();
       this.pointsService.points += this.points;
     }
+    else {
+      this.pointsService.tries--
+    }
+    this.checkNewHighscore()
   }
 
-  addWarnMessage(number: number) {
-    if (number = 1) return [{severity:'info', detail:'Sorry, the series database response takes a bit longer'}];
-    else if (number = 2) return [{severity:'warn', detail:'Please wait for the series database to respond. Unfortunately sometimes the requests can take a while.'}];
-    else if (number = 3) return [{severity:'error', detail:'There seems to be an issue with the series database. Please reload the page or wait for the series database to respond.'}];
+  addWarnMessage(stage: number) {
+    if (stage = 1) return [{severity:'info', detail:'Sorry, the series database response takes longer than expected'}];
+    else if (stage = 2) return [{severity:'warn', detail:'Please wait for the series database to respond. Unfortunately sometimes such requests can take a while.'}];
+    else if (stage = 3) return [{severity:'error', detail:'There seems to be an issue with the series database. Please wait for the series database to respond. Alternatively reload the page and start a new game.'}];
     else return [{severity:'success', detail:'Successfully loaded'}];
 }
 
